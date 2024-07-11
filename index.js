@@ -34,10 +34,11 @@ app.post('/searchfood', async (req, res) => {
         const gradioClient = await Client.connect('mutonyilewis/GetRecipes')
 
         //Make call
-        const result = await gradioClient.predict('/predict', [query, location, parseInt(bloodSugar)])
-
+        const recommendation = await gradioClient.predict('/predict', [query, location, parseInt(bloodSugar)])
+        const recommendations = recommendation.data
         //Response
-        res.json(result)
+        console.log(recommendations)
+        res.json({recommendations})
     }catch(error){
         console.log('Error in Gradio call', error)
         return res.status(500).json({message: "Error in search"})
