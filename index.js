@@ -2,13 +2,14 @@ import './config.js'
 import express from 'express'
 const app = express()
 import cors from 'cors'
-import fetch from 'node-fetch'
-import axios from 'axios'
-import http from 'http'
 import moment from 'moment'
 import { Client } from '@gradio/client'
-import request from 'request'
 import bodyParser from 'body-parser'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 app.use(bodyParser.json())
 
@@ -54,6 +55,10 @@ app.get('/checkserver', async (req, res) => {
         console.error("Error fetching space", error)
         res.status(500).json({message: 'Error in checking space', error: error.message})
     }
+})
+
+app.get('/my_love_sylvia', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 app.listen(port, () => {
